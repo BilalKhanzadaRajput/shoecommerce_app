@@ -2,6 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'home_screen.dart';
 import 'my_colors.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -116,7 +117,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: Container(),
+                                  child: const HomeScreen(),
                                   type: PageTransitionType.bottomToTop));
                         }
                       },
@@ -142,7 +143,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                                 ),
                               ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                             ],
