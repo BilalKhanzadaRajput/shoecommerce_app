@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shoecommerce_app/my_colors.dart';
 
 import 'data.dart';
+import 'detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -166,7 +168,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(14.0)),
                     elevation: 0,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const DetailScreen(),
+                                type: PageTransitionType.rightToLeft));
+                      },
                       child: Container(
                         margin:
                             const EdgeInsets.only(left: 10, right: 10, top: 5),
@@ -203,15 +211,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(
                               height: 5,
                             ),
-                            RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                text: "\$ ${e.price}",
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            Row(
+                              children: [
+                                RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                    text: "\$ ${e.price}",
+                                    style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const Spacer(),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.black87),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30)))),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -222,6 +251,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 .toList(),
           )
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: MyColors.myOrange,
+        onPressed: (){
+
+        },
+        child: Container(
+          margin: const EdgeInsets.all(15),
+          child : const Icon(Icons.home_outlined, color: Colors.white,),
+
+        ),
+        elevation: 4.0,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            IconButton(onPressed: (){}, icon: Image.asset("assets/ic_shop.png")),
+            IconButton(onPressed: (){}, icon: Image.asset("assets/ic_wishlist.png")),
+            IconButton(onPressed: (){}, icon: Image.asset("assets/ic_notif.png")),
+            const SizedBox(
+              width: 2,
+            ),
+          ],
+        ),
       ),
     );
   }
