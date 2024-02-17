@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoecommerce_app/my_colors.dart';
 
@@ -15,9 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> buildCategories() {
     return Data.generateCategories()
         .map((e) => Container(
-              padding: EdgeInsets.only(left: 15, bottom: 10),
+              padding: const EdgeInsets.only(left: 15, bottom: 10),
               child: ElevatedButton(
                 onPressed: () {},
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      e.id == 1 ? Colors.white : MyColors.myBlack),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      e.id == 1 ? MyColors.myOrange : Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  )),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -34,20 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         e.title,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
-                ),
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      e.id == 1 ? Colors.white : MyColors.myBlack),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      e.id == 1 ? MyColors.myOrange : Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(35),
-                  )),
                 ),
               ),
             ))
@@ -69,15 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.all(25),
+            padding: const EdgeInsets.all(25),
             child: Stack(
               children: [
                 ClipRRect(
-                  child: Image.asset("assets/img_banner.png"),
                   borderRadius: BorderRadius.circular(18),
+                  child: Image.asset("assets/img_banner.png"),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,9 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text(
-                          "Buy Now".toUpperCase(),
-                        ),
                         style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                               MyColors.myBlack),
@@ -119,6 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35),
                           )),
+                        ),
+                        child: Text(
+                          "Buy Now".toUpperCase(),
                         ),
                       ),
                     ],
@@ -134,6 +133,94 @@ class _HomeScreenState extends State<HomeScreen> {
               children: buildCategories(),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: const TextSpan(
+                text: "New Men's",
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: 0.9,
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            padding: const EdgeInsets.all(5),
+            children: Data.generateProducts()
+                .map(
+                  (e) => Card(
+                    shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(14.0)),
+                    elevation: 0,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        margin:
+                            const EdgeInsets.only(left: 10, right: 10, top: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(e.image, height: 90, width: 90),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                text: e.type,
+                                style: const TextStyle(
+                                  color: MyColors.myOrange,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                text: e.title,
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                text: "\$ ${e.price}",
+                                style: const TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          )
         ],
       ),
     );
